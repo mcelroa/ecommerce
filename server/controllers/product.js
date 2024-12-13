@@ -74,13 +74,61 @@ exports.read = (req, res) => {
   return res.json(req.product);
 };
 
+exports.listAll = (req, res) => {
+  const order = req.query.order === 'desc' ? -1 : 1; // Ensure order is either 1 (asc) or -1 (desc)
+  const sortBy = req.query.sortBy ? req.query.sortBy : '_id'; // Field to sort by
+  const limit = parseInt(req.query.limit) || 6; // Ensure limit is a number
+
+  Product.find()
+    .select('-photo')
+    .populate('category')
+    .sort({ [sortBy]: order })
+    .limit(limit)
+    .exec()
+    .then((products) => {
+      res.json(products);
+    })
+    .catch((err) => {
+      return res.status(400).json({
+        err: 'Products not found',
+      });
+    });
+};
+
+exports.listRelated = (req, res) => {
+  let limit = req.query.limit ? req.query.limit : 6;
+
+  Product.find({ _id: { $ne: req.product }, category: req.product.category })
+    .limit(limit)
+    .populate('category', '_id name')
+    .exec()
+    .then((products) => {
+      res.json(products)
+    })
+    .catch((err) => {
+      return res.json({
+        err: 'Products not found'
+      })
+    })
+}
+
+exports.listCategories = (req, res) => {
+  Product.distinct('category', {})
+    .then((categories) => {
+      res.json(categories);
+    })
+    .catch((err) => {
+      return res.status(400).json({
+        err: 'No products found'
+      })
+    })
+}
+
 exports.update = (req, res) => {
   const form = new formidable.IncomingForm();
   form.keepExtensions = true;
 
   form.parse(req, (err, fields, files) => {
-
-    console.log(files)
 
     if (err) {
       return res.status(400).json({ error: "Image could not be uploaded" });
@@ -95,9 +143,6 @@ exports.update = (req, res) => {
       category: fields.category?.[0] || null, // Default category
     };
 
-    console.log(productData);
-
-
     const { name, description, price, quantity, category } = productData;
     if (!name || !description || !price || !quantity || !category) {
       return res.status(400).json({
@@ -107,8 +152,6 @@ exports.update = (req, res) => {
 
     let product = req.product;
     product = _.extend(product, productData);
-
-    console.log(product);
 
     if (files.photo[0]) {
       if (files.photo[0].size > 1000000) {
@@ -145,4 +188,56 @@ exports.remove = (req, res) => {
         err: errorHandler(err)
       })
     })
+}
+
+exports.listBySearch = (req, res) => {
+  let order = req.body.order ? req.body.order : "desc";
+  let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
+  let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+  let skip = parseInt(req.body.skip);
+  let findArgs = {};
+
+  // console.log(order, sortBy, limit, skip, req.body.filters);
+  // console.log("findArgs", findArgs);
+
+  for (let key in req.body.filters) {
+    if (req.body.filters[key].length > 0) {
+      if (key === "price") {
+        // gte -  greater than price [0-10]
+        // lte - less than
+        findArgs[key] = {
+          $gte: req.body.filters[key][0],
+          $lte: req.body.filters[key][1]
+        };
+      } else {
+        findArgs[key] = req.body.filters[key];
+      }
+    }
+  }
+
+  Product.find(findArgs)
+    .select("-photo")
+    .populate("category")
+    .sort({ [sortBy]: order })
+    .skip(skip)
+    .limit(limit)
+    .exec()
+    .then((data) => {
+      res.json({
+        size: data.length,
+        data
+      });
+    })
+    .catch((err) => {
+      return res.status(400).json({
+        error: "Products not found"
+      });
+    })
+};
+
+exports.photo = (req, res) => {
+  if (req.product.photo.data) {
+    res.set('Content-Type', req.product.photo.contentType);
+    return res.send(req.product.photo.data);
+  }
 }
