@@ -26,11 +26,10 @@ exports.signin = (req, res) => {
     const { email, password } = req.body;
     User.findOne({ email })
         .then((user) => {
-            // if user is found make sure the email and password match
-            // create authenticate method in user model
+            // Make sure the password matches the password for this email
             if (!user.authenticate(password)) {
                 return res.status(401).json({
-                    error: "Email and password dont match"
+                    error: "Password is incorrect"
                 });
             }
             // generate a signed token with user id and secret
