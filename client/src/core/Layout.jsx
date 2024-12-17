@@ -17,11 +17,8 @@ const Layout = ({
             <p className="lead">{description}</p>
           </div>
         </div>
-        <div className="row">
-          <div className="col text-center">
-            <div className={className}>{children}</div>
-          </div>
-        </div>
+
+        <div className={className}>{children}</div>
       </div>
     </div>
   );
