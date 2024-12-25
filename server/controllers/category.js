@@ -9,7 +9,7 @@ exports.categoryById = (req, res, next, id) => {
     })
     .catch((err) => {
       return res.status(400).json({
-        err: 'Category does not exist'
+        error: 'Category does not exist'
       })
     })
 }
@@ -22,7 +22,7 @@ exports.create = (req, res) => {
     })
     .catch((err) => {
       return res.status(400).json({
-        err: errorHandler(err)
+        error: errorHandler(err)
       });
     })
 }
@@ -38,7 +38,7 @@ exports.readAll = (req, res) => {
     })
     .catch((err) => {
       return res.status(400).json({
-        msg: errorHandler(err)
+        error: errorHandler(err)
       })
     })
 }
@@ -52,7 +52,7 @@ exports.update = (req, res) => {
     })
     .catch((err) => {
       return res.status(400).json({
-        err: errorHandler(err)
+        error: errorHandler(err)
       })
     })
 }
@@ -67,7 +67,7 @@ exports.remove = (req, res) => {
     })
     .catch((err) => {
       return res.status(400).json({
-        err: errorHandler(err)
+        error: errorHandler(err)
       })
     })
 }

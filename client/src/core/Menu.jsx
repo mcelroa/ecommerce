@@ -20,6 +20,30 @@ const Menu = () => {
           </Link>
         </li>
 
+        {isAuthenticated() && isAuthenticated().user.role === 0 && (
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              style={isActive(location, "/user/dashboard")}
+              to="/user/dashboard"
+            >
+              Dashboard
+            </Link>
+          </li>
+        )}
+
+        {isAuthenticated() && isAuthenticated().user.role === 1 && (
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              style={isActive(location, "/admin/dashboard")}
+              to="/admin/dashboard"
+            >
+              Admin Dashboard
+            </Link>
+          </li>
+        )}
+
         {!isAuthenticated() && (
           <>
             <li className="nav-item">

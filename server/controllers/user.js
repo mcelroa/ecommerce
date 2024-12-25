@@ -29,7 +29,7 @@ exports.update = (req, res) => {
         })
         .catch((err) => {
             return res.status(400).json({
-                err: 'You are not authorized to perform this action'
+                error: 'You are not authorized to perform this action'
             })
         })
 }

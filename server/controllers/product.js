@@ -47,12 +47,13 @@ exports.create = (req, res) => {
 
     let product = new Product(productData);
 
-    if (files.photo[0]) {
+    if (files && files.photo && files.photo[0]) {
       if (files.photo[0].size > 1000000) {
         return res.status(400).json({
           error: "Image should be less than 1mb in size",
         });
       }
+
       product.photo.data = fs.readFileSync(files.photo[0].filepath);
       product.photo.contentType = files.photo[0].mimetype;
     }
@@ -90,7 +91,7 @@ exports.listAll = (req, res) => {
     })
     .catch((err) => {
       return res.status(400).json({
-        err: 'Products not found',
+        error: 'Products not found',
       });
     });
 };
@@ -107,7 +108,7 @@ exports.listRelated = (req, res) => {
     })
     .catch((err) => {
       return res.json({
-        err: 'Products not found'
+        error: 'Products not found'
       })
     })
 }
@@ -119,7 +120,7 @@ exports.listCategories = (req, res) => {
     })
     .catch((err) => {
       return res.status(400).json({
-        err: 'No products found'
+        error: 'No products found'
       })
     })
 }
@@ -185,7 +186,7 @@ exports.remove = (req, res) => {
     })
     .catch((err) => {
       return res.status(400).json({
-        err: errorHandler(err)
+        error: errorHandler(err)
       })
     })
 }

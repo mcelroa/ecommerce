@@ -44,7 +44,7 @@ const Signup = () => {
   const signupForm = () => {
     return (
       <form>
-        <div className="mb-3">
+        <div className="mb-2">
           <label className="form-label">Name</label>
           <input
             onChange={handleChange("name")}
@@ -53,7 +53,7 @@ const Signup = () => {
             className="form-control"
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-2">
           <label className="form-label">Email</label>
           <input
             onChange={handleChange("email")}
@@ -62,7 +62,7 @@ const Signup = () => {
             className="form-control"
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-2">
           <label className="form-label">Password</label>
           <input
             onChange={handleChange("password")}

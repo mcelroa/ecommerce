@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import Layout from "../core/Layout";
-import { authenticate, signin } from "../auth";
+import { authenticate, signin, isAuthenticated } from "../auth";
 
 const Signin = () => {
   const [values, setValues] = useState({
@@ -13,6 +13,7 @@ const Signin = () => {
   });
 
   const { email, password, error, loading, redirectToReferrer } = values;
+  const { user } = isAuthenticated();
 
   const handleChange = (field) => (event) => {
     setValues({ ...values, error: "", [field]: event.target.value });
@@ -43,7 +44,7 @@ const Signin = () => {
   const signinForm = () => {
     return (
       <form>
-        <div className="mb-3">
+        <div className="mb-2">
           <label className="form-label">Email</label>
           <input
             onChange={handleChange("email")}
@@ -52,7 +53,7 @@ const Signin = () => {
             className="form-control"
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-2">
           <label className="form-label">Password</label>
           <input
             onChange={handleChange("password")}
@@ -70,6 +71,13 @@ const Signin = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
+      return user.role === 1 ? (
+        <Navigate to="/admin/dashboard" />
+      ) : (
+        <Navigate to="/user/dashboard" />
+      );
+    }
+    if (isAuthenticated()) {
       return <Navigate to="/" />;
     }
     return null;
