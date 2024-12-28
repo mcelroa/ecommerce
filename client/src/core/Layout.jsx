@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
 import Menu from "./Menu";
+import "../styles.css";
 
 const Layout = ({
   title = "Title",
@@ -11,9 +11,9 @@ const Layout = ({
     <div>
       <Menu />
       <div className="container py-5">
-        <div className="row">
-          <div className="col text-center">
-            <h1 className="display-4">{title}</h1>
+        <div className="row mb-3">
+          <div className="col text-center page-header">
+            <h1 className="display-4 mt-3">{title}</h1>
             <p className="lead">{description}</p>
           </div>
         </div>
@@ -22,14 +22,6 @@ const Layout = ({
       </div>
     </div>
   );
-};
-
-// Define PropTypes for validation
-Layout.propTypes = {
-  title: PropTypes.string, // Ensures 'title' is a string
-  description: PropTypes.string, // Ensures 'description' is a string
-  className: PropTypes.string, // Ensures 'className' is a string
-  children: PropTypes.node, // Ensures 'children' can be any renderable content
 };
 
 export default Layout;
