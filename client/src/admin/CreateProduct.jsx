@@ -141,9 +141,9 @@ const CreateProduct = () => {
           <select onChange={handleChange("category")} className="form-control">
             <option>-- Select Category --</option>
             {categories &&
-              categories.map((c) => {
+              categories.map((c, i) => {
                 return (
-                  <option key={c._id} value={c._id}>
+                  <option key={i} value={c._id}>
                     {c.name}
                   </option>
                 );

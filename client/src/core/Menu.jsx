@@ -20,6 +20,16 @@ const Menu = () => {
           </Link>
         </li>
 
+        <li className="nav-item">
+          <Link
+            className="nav-link"
+            style={isActive(location, "/shop")}
+            to="/shop"
+          >
+            Shop
+          </Link>
+        </li>
+
         {isAuthenticated() && isAuthenticated().user.role === 0 && (
           <li className="nav-item">
             <Link
