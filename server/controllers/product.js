@@ -194,7 +194,7 @@ exports.remove = (req, res) => {
 exports.listBySearch = (req, res) => {
   let order = req.body.order ? req.body.order : "desc";
   let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
-  let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+  let limit = req.body.limit ? parseInt(req.body.limit) : 20;
   let skip = parseInt(req.body.skip);
   let findArgs = {};
 

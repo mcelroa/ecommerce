@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { isAuthenticated } from "../auth";
 import Layout from "../core/Layout";
-import { createProduct, getCategories } from "./requests";
+import { createProduct } from "./requests";
+import { getCategories } from "../core/requests";
 import { Link } from "react-router-dom";
 
 const CreateProduct = () => {
