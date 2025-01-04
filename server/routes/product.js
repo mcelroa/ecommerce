@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const { create, read, listAll, update, remove, listRelated, listCategories, listBySearch, photo, productById } = require("../controllers/product");
+const { create, read, listAll, listSearch, update, remove, listRelated, listCategories, listBySearch, photo, productById } = require("../controllers/product");
 const { requireSignin, isAuth, isAdmin } = require("../controllers/auth");
 const { userById } = require("../controllers/user");
 
 // POST Requests
 router.post("/product/:userId", requireSignin, isAuth, isAdmin, create);
 router.post("/products/by/search", listBySearch);
+router.post("/products/search", listSearch);
 
 // GET Requests
 router.get("/product/:productId", read);

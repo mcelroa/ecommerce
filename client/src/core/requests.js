@@ -1,4 +1,5 @@
 import { API } from "../config";
+import queryString from 'query-string';
 
 export const getProducts = async (sortBy) => {
   try {
@@ -41,5 +42,20 @@ export const getFilteredProducts = async (skip, limit, filters) => {
     return response.json();
   } catch (error) {
     console.error("Catch block of createCategory: ", error);
+  }
+};
+
+export const list = async (params) => {
+
+  const query = queryString.stringify(params)
+
+  try {
+    const response = await fetch(`${API}/products/search?${query}`, {
+      method: "POST",
+    });
+
+    return response.json();
+  } catch (error) {
+    console.error("Catch block of getCategories: ", error);
   }
 };
