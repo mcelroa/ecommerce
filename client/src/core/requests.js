@@ -9,7 +9,19 @@ export const getProducts = async (sortBy) => {
 
     return response.json();
   } catch (error) {
-    console.error("Catch block of getCategories: ", error);
+    console.error("Catch block of getProducts: ", error);
+  }
+};
+
+export const getSingleProduct = async (productId) => {
+  try {
+    const response = await fetch(`${API}/product/${productId}`, {
+      method: "GET",
+    });
+
+    return response.json();
+  } catch (error) {
+    console.error("Catch block of getSingleProduct: ", error);
   }
 };
 
@@ -41,7 +53,7 @@ export const getFilteredProducts = async (skip, limit, filters) => {
 
     return response.json();
   } catch (error) {
-    console.error("Catch block of createCategory: ", error);
+    console.error("Catch block of getFilteredProducts: ", error);
   }
 };
 
@@ -52,6 +64,18 @@ export const list = async (params) => {
   try {
     const response = await fetch(`${API}/products/search?${query}`, {
       method: "POST",
+    });
+
+    return response.json();
+  } catch (error) {
+    console.error("Catch block of list: ", error);
+  }
+};
+
+export const listRelated = async (productId) => {
+  try {
+    const response = await fetch(`${API}/products/related/${productId}`, {
+      method: "GET",
     });
 
     return response.json();

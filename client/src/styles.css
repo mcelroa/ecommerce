@@ -45,3 +45,21 @@
     background-position: 0% 50%;
   }
 }
+
+.name {
+  background-color: indigo;
+  color: #fff;
+  font-weight: bold;
+}
+
+.black-10 {
+  color: #1a1a1a;
+}
+
+.black-9 {
+  color: #333333;
+}
+
+.black-8 {
+  color: #4d4d4d;
+}

@@ -6,7 +6,9 @@ const fs = require('fs');
 const product = require('../models/product');
 
 exports.productById = (req, res, next, id) => {
-  Product.findById(id).exec()
+  Product.findById(id)
+    .populate('category')
+    .exec()
     .then((product) => {
       req.product = product;
       next();
