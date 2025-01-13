@@ -78,7 +78,6 @@ const Search = () => {
   };
 
   const searchMessage = (searched, results) => {
-    console.log(searched, results);
     if (searched && results.length > 0) {
       return `Found ${results.length} books`;
     }
@@ -93,7 +92,11 @@ const Search = () => {
         <h2>{searchMessage(searched, results)}</h2>
         <div className="row">
           {results.map((p, i) => {
-            return <Card key={i} product={p} />;
+            return (
+              <div className="col-4" key={i}>
+                <Card product={p} />
+              </div>
+            );
           })}
         </div>
       </div>

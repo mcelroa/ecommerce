@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth";
+import { itemTotal } from "./cartHelpers";
 
 const isActive = (location, path) => {
   return location.pathname === path
@@ -27,6 +28,19 @@ const Menu = () => {
             to="/shop"
           >
             Shop
+          </Link>
+        </li>
+
+        <li className="nav-item">
+          <Link
+            className="nav-link"
+            style={isActive(location, "/cart")}
+            to="/cart"
+          >
+            Cart{" "}
+            <sup>
+              <small className="cart-badge">{itemTotal()}</small>
+            </sup>
           </Link>
         </li>
 

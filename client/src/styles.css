@@ -63,3 +63,11 @@
 .black-8 {
   color: #4d4d4d;
 }
+
+.cart-badge {
+  border-radius: 50%;
+  background-color: black;
+  color: #fff;
+  font-size: 1em;
+  font-weight: bold;
+}
