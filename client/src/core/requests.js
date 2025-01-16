@@ -83,3 +83,38 @@ export const listRelated = async (productId) => {
     console.error("Catch block of getCategories: ", error);
   }
 };
+
+export const getBraintreeClientToken = async (userId, token) => {
+  try {
+    const response = await fetch(`${API}/braintree/getToken/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`
+      },
+    });
+
+    return response.json();
+  } catch (error) {
+    console.error("Catch block of getCategories: ", error);
+  }
+};
+
+export const processPayment = async (userId, token, paymentData) => {
+  try {
+    const response = await fetch(`${API}/braintree/payment/${userId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(paymentData)
+    });
+
+    return response.json();
+  } catch (error) {
+    console.error("Catch block of getCategories: ", error);
+  }
+};
